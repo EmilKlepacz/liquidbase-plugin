@@ -1,0 +1,76 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>liquidbase.plugin.liquidbase-cobra-plugin</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>liquidbase-cobra-plug</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="emil.klpeacz@zoneit.pl" url="https://www.https://zoneit.pl/">Emil Klepacz: ZONE IT</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    <p style="color:red">Please set up db connection in settings before use!</p>
+    This Plugin does the following things:
+    <ol>
+      <li>Adds new changelog template to the project</li>
+      <li>Attaches PL/SQL package for selected .changelog.xml file </li>
+      <li>Attaches function registration for selected .changelog.xml file </li>
+    </ol>
+    ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService
+                serviceImplementation="liquidbase.plugin.settings.AppSettingsState"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="liquidbase.plugin.settings.AppSettingsConfigurable"
+                id="org.intellij.sdk.settings.AppSettingsConfigurable"
+                displayName="Cobra Liquidbase plugin"/>
+    </extensions>
+
+    <actions>
+        <action id="liquidbase.plugin.action.template.EmptyTemplateAddAction"
+                class="liquidbase.plugin.action.template.EmptyTemplateAddAction"
+                text="Liquidbase Cobra Plugin: Create Changelog"
+                description="Add new empty changelog template for a ticket change"
+                icon="AllIcons.Actions.AddList">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+            <override-text place="MainMenu" text="Create changelog"/>
+            <keyboard-shortcut first-keystroke="control alt A" keymap="$default"/>
+            <mouse-shortcut keystroke="control button3 doubleClick" keymap="$default"/>
+        </action>
+
+        <group id="ProjectViewPopupMenuCobraActions"
+               text="Attach to changeset"
+               popup="true">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+            <action class="liquidbase.plugin.action.oraclepackage.PLSQLPckAttachAction"
+                    id="liquidbase.plugin.action.oraclepackage.PLSQLPckAttachAction"
+                    text="PL/SQL package"
+                    description="Attach package changelog to existing changeset">
+            </action>
+            <action class="liquidbase.plugin.action.function.FunRegisterAction"
+                    id="liquidbase.plugin.action.function.FunRegisterAction"
+                    text="function registration"
+                    description="Attach function registration changelog to existing changeset">
+            </action>
+            <action class="liquidbase.plugin.action.module.ModRegisterAction"
+                    id="liquidbase.plugin.action.function.ModRegisterAction"
+                    text="module registration"
+                    description="Attach module registration changelog to existing changeset">
+            </action>
+        </group>
+    </actions>
+
+</idea-plugin>

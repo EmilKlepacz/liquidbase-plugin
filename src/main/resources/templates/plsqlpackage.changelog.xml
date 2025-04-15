@@ -1,0 +1,20 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet author="$AUTHOR$" id="$TICKET_ID$" runOnChange="true">
+        <sqlFile dbms="oracle" encoding="windows-1252" endDelimiter="\n/" path="../plsql/$PACKAGE_PREFIX$/$PACKAGE_NAME$"/>
+        <comment>Don't rollback this package by means of itself!</comment>
+        <rollback>
+            <sql dbms="oracle" endDelimiter="\n/">
+                begin
+                srchst.restore_version('PACKAGE', 'APP_COBRA', '$PACKAGE_NAME_NO_EXT$',
+                utlliq.get_date_of_changeset('$TICKET_ID$'));
+                end;
+                /
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

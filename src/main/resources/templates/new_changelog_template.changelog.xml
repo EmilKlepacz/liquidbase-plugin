@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <preConditions>
+        <dbms type="oracle"/>
+        <runningAs username="APP_COBRA"/>
+    </preConditions>
+
+    <changeSet author="$AUTHOR$" id="$TICKET_ID$-Start">
+        <tagDatabase tag="before:$TICKET_ID$"/>
+    </changeSet>
+
+    <!-- Add your changelogs here -->
+
+    <changeSet author="$AUTHOR$" id="$TICKET_ID$-End">
+        <tagDatabase tag="end:$TICKET_ID$"/>
+    </changeSet>
+
+</databaseChangeLog>
